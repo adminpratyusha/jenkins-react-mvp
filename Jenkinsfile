@@ -31,6 +31,44 @@ pipeline {
       }
         }
 
+    // stage('CODE ANALYSIS with SONARQUBE') {
+    //   environment {
+    //     scannerHome = tool 'sonar-scanner'
+    //   }
+
+    //     steps {
+    //     script {
+    //         withSonarQubeEnv(credentialsId: 'sonartoken', installationName: 'sonarqube') {
+    //             sh """$scannerHome/bin/sonar-scanner \
+    //                 -Dsonar.projectKey='REACT' \
+    //                 -Dsonar.projectName='REACT' \
+    //                 -Dsonar.sources=src/ \
+    //                 -Dsonar.java.binaries=target/classes/ \
+    //                 -Dsonar.exclusions=src/test/java/****/*.java \
+    //                 -Dsonar.java.libraries=/var/lib/jenkins/.m2/**/*.jar \
+    //                 -Dsonar.projectVersion=${BUILD_NUMBER}-${env.GIT_COMMIT_SHORT}"""
+    //         }
+    //     }
+    //  }
+
+    // }
+
+         stage('OWASP Dependency-Check Vulnerabilities') {
+      steps {
+        script {
+            dependencyCheck additionalArguments: ''' 
+                            -o './'
+                            -s './'
+                            -f 'ALL' 
+                            --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+                
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+        }
+      }
+    }
+
+
+
     //     stage('Test React App') {
     //         steps {
     //              sh 'npm test'
@@ -69,29 +107,6 @@ pipeline {
     //             }
     //         }
     //   }
-        stage('CODE ANALYSIS with SONARQUBE') {
-      environment {
-        scannerHome = tool 'sonar-scanner'
-      }
-
-        steps {
-        script {
-            withSonarQubeEnv(credentialsId: 'sonartoken', installationName: 'sonarqube') {
-                sh """$scannerHome/bin/sonar-scanner \
-                    -Dsonar.projectKey='REACT' \
-                    -Dsonar.projectName='REACT' \
-                    -Dsonar.sources=src/ \
-                    -Dsonar.java.binaries=target/classes/ \
-                    -Dsonar.exclusions=src/test/java/****/*.java \
-                    -Dsonar.java.libraries=/var/lib/jenkins/.m2/**/*.jar \
-                    -Dsonar.projectVersion=${BUILD_NUMBER}-${env.GIT_COMMIT_SHORT}"""
-            }
-        }
-     }
-
-    }
-
-
 
 
 
