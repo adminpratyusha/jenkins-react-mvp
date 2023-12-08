@@ -76,7 +76,7 @@ pipeline {
 
       steps {
         script {
-          withSonarQubeEnv(credentialsId: 'sonartoken', installationName: 'Sonar') {
+          withSonarQubeEnv(credentialsId: 'sonartoken', installationName: 'sonarqube') {
                        sh """$SCANNER_HOME/bin/sonar-scanner \
          -Dsonar.projectKey='REACT' \
          -Dsonar.projectName='REACT' \
