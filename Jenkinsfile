@@ -36,23 +36,29 @@ pipeline {
                  sh 'npm test'
             }
         }
-      stage('Deploy to Nexus') {
+    stage('Deploy to Nexus') {
             steps {
                 script {
-                     withCredentials([string(credentialsId: 'nexusurl', variable: 'NEXUS_URL'), string(credentialsId: 'nexusrepo-react', variable: 'NEXUS_REPO_ID'), string(credentialsId: 'nexuspassword', variable: 'NEXUS_PASSWORD'), string(credentialsId: 'nexususername', variable: 'NEXUS_USERNAME')]) {
+                    withCredentials([
+                        string(credentialsId: 'nexusurl', variable: 'NEXUS_URL'),
+                        string(credentialsId: 'nexusrepo-react', variable: 'NEXUS_REPO_ID'),
+                        string(credentialsId: 'nexuspassword', variable: 'NEXUS_PASSWORD'),
+                        string(credentialsId: 'nexususername', variable: 'NEXUS_USERNAME')
+                    ]) {
 
-                    // Construct and execute the curl command
+                        // Construct and execute the curl command
                         def currentVersion = sh(script: 'node -pe "require(\'./package.json\').version"', returnStdout: true).trim()
-                    def curlCommand = """
-                        curl -v -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} --upload-file build ${NEXUS_URL}/repository/${NEXUS_REPO_ID}/${PACKAGE_NAME}/${currentVersion}/${PACKAGE_NAME}-${currentVersion}.${env.BUILD_ID}
-                    """
-                    sh curlCommand
+                        def artifactPath = "${PACKAGE_NAME}/${currentVersion}/${PACKAGE_NAME}-${currentVersion}.${env.BUILD_ID}"
+                        def curlCommand = """
+                            curl -v -u \${NEXUS_USERNAME}:\${NEXUS_PASSWORD} --upload-file build/\${artifactPath} \${NEXUS_URL}/repository/\${NEXUS_REPO_ID}/\${artifactPath}
+                        """
+                        sh curlCommand
 
-                    // Print deployment information
-                    echo "Artifact deployed to Nexus with version ${currentVersion}"
+                        // Print deployment information
+                        echo "Artifact deployed to Nexus with version ${currentVersion}"
+                    }
                 }
             }
-        }
       }
     
     
