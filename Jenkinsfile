@@ -81,7 +81,6 @@ pipeline {
                     -Dsonar.projectKey='REACT' \
                     -Dsonar.projectName='REACT' \
                     -Dsonar.sources=src/ \
-                    -Dsonar.tests=testresults/junit \
                     -Dsonar.java.binaries=target/classes/ \
                     -Dsonar.exclusions=src/test/java/****/*.java \
                     -Dsonar.java.libraries=/var/lib/jenkins/.m2/**/*.jar \
