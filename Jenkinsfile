@@ -26,6 +26,12 @@ pipeline {
                 // Build your React app
                 sh 'npm run build'
             }
+             post {
+        success {
+          echo 'Now Archiving...'
+          archiveArtifacts artifacts: '**/build/*'
+        }
+      }
         }
 
         stage('Test React App') {
