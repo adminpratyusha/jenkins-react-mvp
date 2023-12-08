@@ -1,0 +1,130 @@
+# Node.js with React
+
+# Build a Node.js project that uses React.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+# trigger:
+# - none
+
+# pool:
+#   vmImage: ubuntu-latest
+
+# steps:
+# - task: NodeTool@0
+#   inputs:
+#     versionSource: 'spec'
+#     versionSpec: '20.9.0'
+#     checkLatest: true
+#   displayName: 'Install Node.js'
+
+# - script: |
+#     npm -v
+#     node -v
+#     npm install
+#     npm run build
+#   displayName: 'npm install and build'
+
+# sonarqube
+# 
+# - task: SonarQubePrepare@5
+#   inputs:
+#     SonarQube: 'sonar-service connection'
+#     scannerMode: 'CLI'
+#     configMode: 'manual'
+#     cliProjectKey: 'TOKEN-react'
+#     cliProjectName: 'react'
+#     cliSources: '.'
+
+
+# - task: SonarQubeAnalyze@5
+#   inputs:
+#     jdkversion: 'JAVA_HOME_17_X64'
+
+# 
+
+#  oswap dependency check
+# - task: dependency-check-build-task@6
+#   inputs:
+#     projectName: 'react'
+#     scanPath: '*/App.js'
+#     format: 'HTML'
+
+
+
+
+# artifact publish
+
+# - task: PublishBuildArtifacts@1
+#   inputs:
+#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#     ArtifactName: 'drop'
+#     publishLocation: 'Container'
+
+# publish to Azure Artifact using versioning script    
+# - task: Bash@3
+#   inputs:
+#     targetType: 'inline'
+#     script: |
+#         currentVersion="$(artifactsuffix)"
+      
+#         # Split the version into major, minor, and patch parts
+#         IFS='.' read -ra versionParts <<< "$currentVersion"    #This line sets the Internal Field Separator (IFS) to a period (dot).{IFS-special Variable}
+#         major=${versionParts[0]}                               # it's reading the contents of the currentVersion variable and splitting it into an array named versionParts
+#         minor=${versionParts[1]}
+#         patch=${versionParts[2]}
+      
+#         # Increment the patch version
+#         ((patch++))
+      
+#         # Construct the new version
+#         newVersion="$major.$minor.$patch"
+#         echo "$(azurepat@react)" | az devops login --organization https://dev.azure.com/sriajay/
+#         az pipelines variable update --name "artifactsuffix" --value "$newVersion" --org https://dev.azure.com/sriajay/ --project React --pipeline-name React --allow-override true
+#         az artifacts universal publish --organization https://dev.azure.com/sriajay/  --feed sriajay --name "my-first-package-$newVersion" --version 0.0.3 --description "Welcome to Universal Packages" --path .
+
+
+
+
+# - task: Docker@2
+#   inputs:
+#     containerRegistry: 'docker@react'
+#     repository: 'neverloosedocker/react'
+#     command: 'buildAndPush'
+#     Dockerfile: '**/Dockerfile'
+
+
+trigger:
+- none
+
+pool:
+  vmImage: ubuntu-latest
+
+resources:
+  repositories:
+  - repository: Myazurerepos # The name used to reference this repository in the checkout step
+    type: git
+    endpoint: azurerepo-sc
+    name: dotnet/react-templates-repo
+    ref: main
+  - repository: azurerepogit # The name used to reference this repository 
+    type: git
+    name: dotnet/dotnetrepo      
+    endpoint: azurerepo- template -sc
+    ref: main    
+
+
+steps:
+
+#- template: /template/react-sonarqube.yml@Myazurerepos
+
+#- template: /template/react-owasp.yml@Myazurerepos
+- template: /template/react-build.yml@Myazurerepos
+
+#- template: /template/react-publish artifact .yml@Myazurerepos
+- template: /Dotnet-templates/Dotnet-Artifact to AzureArtifacts.yml@azurerepogit
+  parameters:
+     ProjectName: react
+     PipelineName: React   
+
+#- template: /template/react-docker.yml@Myazurerepos
