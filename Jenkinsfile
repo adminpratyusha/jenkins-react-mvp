@@ -1,9 +1,10 @@
 pipeline {
     agent any
 
-    // environment {
-    //     // Define any environment variables you need
-    // }
+    environment {
+        // Define any environment variables you need
+       PACKAGE_NAME = 'mvp-react'
+    }
 
     stages {
         stage('Checkout') {
@@ -38,6 +39,8 @@ pipeline {
       stage('Deploy to Nexus') {
             steps {
                 script {
+                     withCredentials([string(credentialsId: 'nexusurl', variable: 'NEXUS_URL'), string(credentialsId: 'nexusrepo-react', variable: 'NEXUS_REPO_ID'), string(credentialsId: 'nexuspassword', variable: 'NEXUS_PASSWORD'), string(credentialsId: 'nexususername', variable: 'NEXUS_USERNAME')]) {
+
                     // Construct and execute the curl command
                     def currentVersion = sh(script: 'npm -s show --json version', returnStdout: true).trim()
                     def curlCommand = """
