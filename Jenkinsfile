@@ -4,6 +4,7 @@ pipeline {
     environment {
         // Define any environment variables you need
        PACKAGE_NAME = 'mvp-react'
+        IMAGE_NAME = 'pratyusha2001/mvpreact'
     }
 
     stages {
@@ -107,7 +108,22 @@ pipeline {
     //             }
     //         }
     //   }
+          stage('DOCKER BUILD & PUSH') {
+      steps {
+        script {
+             def dockerImage = docker.build("${IMAGE_NAME}:${BUILD_ID}")
 
+                
+                    docker.withRegistry('https://registry.hub.docker.com', '') {
+                        dockerImage.push()
+
+
+                    }
+
+
+        }
+      }
+    }
 
 
         
