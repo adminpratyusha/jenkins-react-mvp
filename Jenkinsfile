@@ -74,22 +74,22 @@ pipeline {
         scannerHome = tool 'sonar-scanner'
       }
 
-      steps {
+        steps {
         script {
-          withSonarQubeEnv(credentialsId: 'sonartoken', installationName: 'sonarqube') {
-                       sh """$SCANNER_HOME/bin/sonar-scanner \
-         -Dsonar.projectKey='REACT' \
-         -Dsonar.projectName='REACT' \
-         -Dsonar.sources=src/ \
-         -Dsonar.tests=testresults/junit \
-         -Dsonar.java.binaries=target/classes/ \
-         -Dsonar.exclusions=src/test/java/****/*.java \
-         -Dsonar.java.libraries=/var/lib/jenkins/.m2/**/*.jar \
-         -Dsonar.projectVersion=${BUILD_NUMBER}-${env.GIT_COMMIT_SHORT}"""
-            
-          }
+            withSonarQubeEnv(credentialsId: 'sonartoken', installationName: 'sonarqube') {
+                sh """$scannerHome/bin/sonar-scanner \
+                    -Dsonar.projectKey='REACT' \
+                    -Dsonar.projectName='REACT' \
+                    -Dsonar.sources=src/ \
+                    -Dsonar.tests=testresults/junit \
+                    -Dsonar.java.binaries=target/classes/ \
+                    -Dsonar.exclusions=src/test/java/****/*.java \
+                    -Dsonar.java.libraries=/var/lib/jenkins/.m2/**/*.jar \
+                    -Dsonar.projectVersion=${BUILD_NUMBER}-${env.GIT_COMMIT_SHORT}"""
+            }
         }
-      }
+     }
+
     }
 
 
