@@ -50,10 +50,10 @@ pipeline {
 
                     // Print deployment information
                     echo "Artifact deployed to Nexus with version ${currentVersion}"
-                }}
+                }
             }
         }
-
+      }
     
     
 }}
