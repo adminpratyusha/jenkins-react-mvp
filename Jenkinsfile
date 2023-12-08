@@ -36,6 +36,15 @@ pipeline {
                  sh 'npm test'
             }
         }
+
+           stage('Archive Artifact') {
+      steps {
+        script {
+         sh 'tar -czvf build.tar.gz build'
+
+        }
+      }
+    }
     stage('Deploy to Nexus') {
             steps {
                 script {
@@ -50,7 +59,7 @@ pipeline {
                         def currentVersion = sh(script: 'node -pe "require(\'./package.json\').version"', returnStdout: true).trim()
                         def artifactPath = "${PACKAGE_NAME}/${currentVersion}/${PACKAGE_NAME}-${currentVersion}.${env.BUILD_ID}"
                         def curlCommand = """
-                            curl -v -u \${NEXUS_USERNAME}:\${NEXUS_PASSWORD} --upload-file build/\${artifactPath} \${NEXUS_URL}/repository/\${NEXUS_REPO_ID}/\${artifactPath}
+                          curl -v -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} --upload-file build.tar.gz ${NEXUS_URL}/repository/${NEXUS_REPO_ID}/${PACKAGE_NAME}/${currentVersion}/${PACKAGE_NAME}-${currentVersion}.${env.BUILD_ID}.tar.gz
                         """
                         sh curlCommand
 
