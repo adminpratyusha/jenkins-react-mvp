@@ -2,12 +2,6 @@ pipeline {
     agent any
     
     stages {
-         stage('checkout') {
-            steps {
-                checkout scmGit(branches: [[name: '*/release-*']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/adminpratyusha/jenkins-react-mvp']])
-            }
-        
-        }
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
@@ -16,7 +10,9 @@ pipeline {
         
         stage('Build React App') {
             steps {
+                dir('/var/lib/jenkins/workspace/release-react')
                 sh 'npm run build'
+                
             }
         }
        
