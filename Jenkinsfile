@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Install Dependencies') {
+        stage('CLEANWS') {
             steps {
                 cleanWS()
             }
@@ -23,4 +23,5 @@ pipeline {
             }
         }
     
-}}
+}
+}
