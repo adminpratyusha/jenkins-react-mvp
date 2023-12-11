@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-       PACKAGE_NAME = 'mvp-react'
+       PACKAGE_NAME = 'mvprelease-react'
         OUTPUTFILENAME="build.tar.gz"
         SSHCONFIGNAME='sshtest'
     }
@@ -35,14 +35,14 @@ pipeline {
                 
                     
                     withCredentials([
-                        string(credentialsId: 'nexusurl', variable: 'NEXUS_URL'),
-                        string(credentialsId: 'nexusrepo-react', variable: 'NEXUS_REPO_ID'),
+                       string(credentialsId: 'nexusurl', variable: 'NEXUS_URL'),
+                        string(credentialsId: 'nexusrelease-repo', variable: 'NEXUS_REPO_ID'),
                         string(credentialsId: 'nexuspassword', variable: 'NEXUS_PASSWORD'),
                         string(credentialsId: 'nexususername', variable: 'NEXUS_USERNAME')
                     ]) {
                 sh "curl -v -o ${OUTPUTFILENAME} -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} ${NEXUS_URL}/repository/${NEXUS_REPO_ID}/${PACKAGE_NAME}/${currentVersion}/${PACKAGE_NAME}-${currentVersion}.tar.gz"
       
-              sh "curl -v -o ${OUTPUTFILENAME} -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} ${NEXUS_URL}/repository/${NEXUS_REPO_ID}/${PACKAGE_NAME}/1.0.1/${PACKAGE_NAME}-${APP_VERSION}.tar.gz"                    
+              // sh "curl -v -o ${OUTPUTFILENAME} -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} ${NEXUS_URL}/repository/${NEXUS_REPO_ID}/${PACKAGE_NAME}/1.0.1/${PACKAGE_NAME}-${APP_VERSION}.tar.gz"                    
                 }
             }
         }
