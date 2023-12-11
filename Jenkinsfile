@@ -3,7 +3,7 @@ pipeline {
 
     environment {
        PACKAGE_NAME = 'mvprelease-react'
-        OUTPUTFILENAME="artifact.tar.gz"
+        // OUTPUTFILENAME="artifact.tar.gz"
         SSHCONFIGNAME='sshtest'
     }
 
@@ -40,23 +40,18 @@ pipeline {
                         string(credentialsId: 'nexuspassword', variable: 'NEXUS_PASSWORD'),
                         string(credentialsId: 'nexususername', variable: 'NEXUS_USERNAME')
                     ]) {
-                sh "curl -v -o  ${OUTPUTFILENAME} -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} ${NEXUS_URL}/repository/${NEXUS_REPO_ID}/${PACKAGE_NAME}/${params.currentVersion}/${PACKAGE_NAME}-${params.currentVersion}.tar.gz && pwd && ls -l"
-      
+                // sh "curl -v -o  ${OUTPUTFILENAME} -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} ${NEXUS_URL}/repository/${NEXUS_REPO_ID}/${PACKAGE_NAME}/${params.currentVersion}/${PACKAGE_NAME}-${params.currentVersion}.tar.gz && pwd && ls -l"
+      sh "curl -v -o build.tar.gz -u admin:admin http://34.42.7.89:8081/repository/mvp-react-release/mvprelease-react/0.1.0/mvprelease-react-0.1.0.30.tar.gz"
                 }
             }
         }
         }
-          stage("check"){
-            steps{
-        script {
-    sh "file ${OUTPUTFILENAME}"
-    sh "cat ${OUTPUTFILENAME}"
-}}}
+
 
         stage("unzip artifact"){
             steps{
                 script{
-                    sh "tar xf ${OUTPUTFILENAME}"
+                    sh "tar xf build.tar.gz"
                 }
             }
         }
