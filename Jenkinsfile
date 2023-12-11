@@ -3,7 +3,7 @@ pipeline {
 
     environment {
        PACKAGE_NAME = 'mvprelease-react'
-        OUTPUTFILENAME="build"
+        OUTPUTFILENAME="artifact.tar.gz"
         SSHCONFIGNAME='sshtest'
     }
 
