@@ -50,7 +50,7 @@ pipeline {
         stage("unzip artifact"){
             steps{
                 script{
-                    sh "tar -xvf ${PACKAGE_NAME}-${params.currentVersion}.tar.gz"
+                    sh "tar xf ${PACKAGE_NAME}-${params.currentVersion}.tar.gz"
                 }
             }
         }
