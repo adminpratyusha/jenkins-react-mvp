@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    
     stages {
         stage('Install Dependencies') {
             steps {
@@ -11,7 +12,6 @@ pipeline {
             steps {
                 sh 'npm run build'
             }
-        
         }
-}
+    }
 }
