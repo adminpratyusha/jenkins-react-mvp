@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        Define any environment variables you need
+        // Define any environment variables you need
        PACKAGE_NAME = 'mvprelease-react'
-        IMAGE_NAME = 'pratyusha2001/mvpreact-release'
+        // IMAGE_NAME = 'pratyusha2001/mvpreact-release'
     }
 
     stages {
