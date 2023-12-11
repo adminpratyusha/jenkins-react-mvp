@@ -13,5 +13,11 @@ pipeline {
                 sh 'npm run build'
             }
         }
+        stage('clean') {
+            steps {
+                cleanWs()
+            }
+        
+        }
     }
 }
