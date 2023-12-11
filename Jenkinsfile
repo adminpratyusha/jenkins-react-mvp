@@ -3,7 +3,7 @@ pipeline {
 
     environment {
        PACKAGE_NAME = 'mvprelease-react'
-        OUTPUTFILENAME="build.tar.gz"
+        OUTPUTFILENAME="build"
         SSHCONFIGNAME='sshtest'
     }
 
@@ -48,16 +48,16 @@ pipeline {
         }
         }
 
-        stage("unzip artifact"){
-            steps{
-                script{
-                    sh "tar -xvf ${OUTPUTFILENAME}"
+        // stage("unzip artifact"){
+        //     steps{
+        //         script{
+        //             sh "tar -xvf ${OUTPUTFILENAME}"
 
 
 
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
 
          stage('Stop nginx and remote old version files') {
             steps {
