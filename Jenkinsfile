@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-    //     // Define any environment variables you need
-        PACKAGE_NAME = 'mvprelease-react'
-    //     // IMAGE_NAME = 'pratyusha2001/mvpreact-release'
+        Define any environment variables you need
+       PACKAGE_NAME = 'mvprelease-react'
+        IMAGE_NAME = 'pratyusha2001/mvpreact-release'
     }
 
     stages {
@@ -17,25 +17,7 @@ pipeline {
         stage('Build React App') {
             steps {
                 sh 'npm run build'
-                withCredentials([
-                        string(credentialsId: 'nexusurl', variable: 'NEXUS_URL'),
-                        string(credentialsId: 'nexusrelease-repo', variable: 'NEXUS_REPO_ID'),
-                        string(credentialsId: 'nexuspassword', variable: 'NEXUS_PASSWORD'),
-                        string(credentialsId: 'nexususername', variable: 'NEXUS_USERNAME')
-                    ]) {
-                  script{
-                        // Construct and execute the curl command
-                        def currentVersion = sh(script: 'node -pe "require(\'./package.json\').version"', returnStdout: true).trim()
-                        // def artifactPath = "${PACKAGE_NAME}/${currentVersion}/${PACKAGE_NAME}-${currentVersion}.${env.BUILD_ID}"
-                        def curlCommand = """
-                          curl -v -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} --upload-file build.tar.gz ${NEXUS_URL}/repository/${NEXUS_REPO_ID}/${PACKAGE_NAME}/${currentVersion}/${PACKAGE_NAME}-${currentVersion}.${env.BUILD_ID}.tar.gz
-                        """
-                        sh curlCommand
-
-                        // Print deployment information
-                        echo "Artifact deployed to Nexus with version ${currentVersion}"
-                    }
-            }}
+            }
             
         }
 
@@ -77,44 +59,44 @@ pipeline {
 
 
 
-    //     stage('Test React App') {
-    //         steps {
-    //              sh 'npm test'
-    //         }
-    //     }
+        stage('Test React App') {
+            steps {
+                 sh 'npm test'
+            }
+        }
 
-    //        stage('Archive Artifact') {
-    //   steps {
-    //     script {
-    //      sh 'tar -czvf build.tar.gz build'
+           stage('Archive Artifact') {
+      steps {
+        script {
+         sh 'tar -czvf build.tar.gz build'
 
-    //     }
-    //   }
-    // }
-    // stage('Deploy to Nexus') {
-    //         steps {
-    //             script {
-    //                 withCredentials([
-    //                     string(credentialsId: 'nexusurl', variable: 'NEXUS_URL'),
-    //                     string(credentialsId: 'nexusrelease-repo', variable: 'NEXUS_REPO_ID'),
-    //                     string(credentialsId: 'nexuspassword', variable: 'NEXUS_PASSWORD'),
-    //                     string(credentialsId: 'nexususername', variable: 'NEXUS_USERNAME')
-    //                 ]) {
+        }
+      }
+    }
+    stage('Deploy to Nexus') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'nexusurl', variable: 'NEXUS_URL'),
+                        string(credentialsId: 'nexusrelease-repo', variable: 'NEXUS_REPO_ID'),
+                        string(credentialsId: 'nexuspassword', variable: 'NEXUS_PASSWORD'),
+                        string(credentialsId: 'nexususername', variable: 'NEXUS_USERNAME')
+                    ]) {
 
-    //                     // Construct and execute the curl command
-    //                     def currentVersion = sh(script: 'node -pe "require(\'./package.json\').version"', returnStdout: true).trim()
-    //                     // def artifactPath = "${PACKAGE_NAME}/${currentVersion}/${PACKAGE_NAME}-${currentVersion}.${env.BUILD_ID}"
-    //                     def curlCommand = """
-    //                       curl -v -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} --upload-file build.tar.gz ${NEXUS_URL}/repository/${NEXUS_REPO_ID}/${PACKAGE_NAME}/${currentVersion}/${PACKAGE_NAME}-${currentVersion}.${env.BUILD_ID}.tar.gz
-    //                     """
-    //                     sh curlCommand
+                        // Construct and execute the curl command
+                        def currentVersion = sh(script: 'node -pe "require(\'./package.json\').version"', returnStdout: true).trim()
+                        // def artifactPath = "${PACKAGE_NAME}/${currentVersion}/${PACKAGE_NAME}-${currentVersion}.${env.BUILD_ID}"
+                        def curlCommand = """
+                          curl -v -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} --upload-file build.tar.gz ${NEXUS_URL}/repository/${NEXUS_REPO_ID}/${PACKAGE_NAME}/${currentVersion}/${PACKAGE_NAME}-${currentVersion}.${env.BUILD_ID}.tar.gz
+                        """
+                        sh curlCommand
 
-    //                     // Print deployment information
-    //                     echo "Artifact deployed to Nexus with version ${currentVersion}"
-    //                 }
-    //             }
-    //         }
-    //   }
+                        // Print deployment information
+                        echo "Artifact deployed to Nexus with version ${currentVersion}"
+                    }
+                }
+            }
+      }
     //       stage('DOCKER BUILD & PUSH') {
     //   steps {
     //     script {
