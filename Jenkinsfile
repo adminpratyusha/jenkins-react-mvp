@@ -40,7 +40,7 @@ pipeline {
                         string(credentialsId: 'nexuspassword', variable: 'NEXUS_PASSWORD'),
                         string(credentialsId: 'nexususername', variable: 'NEXUS_USERNAME')
                     ]) {
-                sh "curl -v -o ${OUTPUTFILENAME} -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} ${NEXUS_URL}/repository/${NEXUS_REPO_ID}/${PACKAGE_NAME}/${params.currentVersion}/${PACKAGE_NAME}-${params.currentVersion}.tar.gz"
+                sh "curl -v -O -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} ${NEXUS_URL}/repository/${NEXUS_REPO_ID}/${PACKAGE_NAME}/${params.currentVersion}/${PACKAGE_NAME}-${params.currentVersion}.tar.gz"
       
                 }
             }
@@ -50,7 +50,7 @@ pipeline {
         stage("unzip artifact"){
             steps{
                 script{
-                    sh "tar -xvf ${OUTPUTFILENAME}"
+                    sh "tar -xvf ${PACKAGE_NAME}-${params.currentVersion}.tar.gz"
                 }
             }
         }
