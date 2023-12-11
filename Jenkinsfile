@@ -114,7 +114,7 @@ pipeline {
              def dockerImage = docker.build("${IMAGE_NAME}:${BUILD_ID}")
 
                 
-                    docker.withRegistry('https://registry.hub.docker.com', '') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockercred') {
                         dockerImage.push()
 
 
