@@ -42,22 +42,18 @@ pipeline {
                     ]) {
                 sh "curl -v -o ${OUTPUTFILENAME} -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} ${NEXUS_URL}/repository/${NEXUS_REPO_ID}/${PACKAGE_NAME}/${params.currentVersion}/${PACKAGE_NAME}-${params.currentVersion}.tar.gz"
       
-              // sh "curl -v -o ${OUTPUTFILENAME} -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} ${NEXUS_URL}/repository/${NEXUS_REPO_ID}/${PACKAGE_NAME}/1.0.1/${PACKAGE_NAME}-${APP_VERSION}.tar.gz"                    
                 }
             }
         }
         }
 
-        // stage("unzip artifact"){
-        //     steps{
-        //         script{
-        //             sh "tar -xvf ${OUTPUTFILENAME}"
-
-
-
-        //         }
-        //     }
-        // }
+        stage("unzip artifact"){
+            steps{
+                script{
+                    sh "tar -xvf ${OUTPUTFILENAME}"
+                }
+            }
+        }
 
          stage('Stop nginx and remote old version files') {
             steps {
