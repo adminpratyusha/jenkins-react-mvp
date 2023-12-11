@@ -46,6 +46,12 @@ pipeline {
             }
         }
         }
+          stage("check"){
+            steps{
+        script {
+    sh "file ${OUTPUTFILENAME}"
+    sh "cat ${OUTPUTFILENAME}"
+}}}
 
         stage("unzip artifact"){
             steps{
