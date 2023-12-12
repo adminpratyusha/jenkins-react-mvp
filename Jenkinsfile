@@ -42,6 +42,7 @@ pipeline {
                     ]) {
                 sh "curl -v -o  ${OUTPUTFILENAME} -u ${Nexus_USERNAME}:${Nexus_PASSWORD} ${Nexus_URL}/repository/${Nexus_REPO_ID}/${PACKAGE_NAME}/0.1.0/${PACKAGE_NAME}-${params.currentVersion}.tar.gz"
       // sh "curl -v -o build.tar.gz -u admin:admin http://34.42.7.89:8081/repository/mvp-react-release/mvprelease-react/0.1.0/mvprelease-react-0.1.0.30.tar.gz"
+                for i in ${OUTPUTFILENAME} ${Nexus_USERNAME} {Nexus_PASSWORD} ${Nexus_URL} ${Nexus_REPO_ID} ${PACKAGE_NAME} ${params.currentVersion}; do echo $i; done
                 }
             }
         }
