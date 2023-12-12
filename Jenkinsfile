@@ -32,6 +32,13 @@ pipeline {
         stage('Download artifact from Nexus') {
             steps {
                 script {
+                    cleanWs()
+                }
+            }
+        }
+        stage('Download artifact from Nexus') {
+            steps {
+                script {
                 
                     
                     withCredentials([
