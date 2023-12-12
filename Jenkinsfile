@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     environment {
        PACKAGE_NAME = 'mvprelease-react'
         OUTPUTFILENAME="build.tar.gz"
@@ -29,7 +28,7 @@ pipeline {
         // }
         //       }
         // }
-        stage('Download artifact from Nexus') {
+        stage('clean artifact ws') {
             steps {
                 script {
                     cleanWs()
