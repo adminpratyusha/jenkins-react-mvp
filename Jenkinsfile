@@ -88,7 +88,7 @@ pipeline {
                 script {
                  
              sshPublisher(publishers: [sshPublisherDesc(configName: SSHCONFIGNAME ,
-                        transfers: [sshTransfer(flatten: false, sourceFiles: build)])
+                        transfers: [sshTransfer(flatten: false, sourceFiles: "build/**")])
                                        
                     ])                }
             }
