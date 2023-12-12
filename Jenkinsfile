@@ -89,6 +89,7 @@ pipeline {
                  
              sshPublisher(publishers: [sshPublisherDesc(configName: SSHCONFIGNAME ,
                         transfers: [sshTransfer(flatten: false, sourceFiles: OUTPUTFILENAME)])
+                                       
                     ])                }
             }
         }
