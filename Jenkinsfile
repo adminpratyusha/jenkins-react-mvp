@@ -58,7 +58,8 @@ pipeline {
             steps{
                 script{
                     sh 'ls'
-                    sh "tar -xf ${OUTPUTFILENAME} build"
+                    sh "tar -xvf ${OUTPUTFILENAME} build"
+                     sh 'ls'
                 }
             }
         }
