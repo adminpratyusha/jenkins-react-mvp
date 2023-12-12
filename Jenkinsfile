@@ -51,7 +51,7 @@ pipeline {
         stage("unzip artifact"){
             steps{
                 script{
-                    sh "tar xf ${OUTPUTFILENAME}"
+                    sh "tar -xf ${OUTPUTFILENAME} build"
                 }
             }
         }
@@ -90,7 +90,7 @@ pipeline {
                 script {
                         sshPublisher(publishers: [sshPublisherDesc(configName: SSHCONFIGNAME, transfers: [
                                     sshTransfer(
-                                        execCommand: "sudo cp -rf /home/ubuntu/build/* /var/www/html/ && rm -rf /home/ubuntu/build && sudo systemctl start nginx",
+                                        execCommand: "sudo cp -rf /home/ubuntu/build/* /var/www/html/ && rm -rf /home/ubuntu/build && sudo systemctl restart nginx",
                                         execTimeout: 120000
                                     )
                                 ])
