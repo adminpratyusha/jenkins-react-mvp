@@ -46,6 +46,7 @@ pipeline {
                     }
         }
         }
+        }
 
 
         stage("unzip artifact"){
