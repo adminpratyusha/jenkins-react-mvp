@@ -76,7 +76,7 @@ pipeline {
         stage('Deploy to VM') {
             steps {
                 script {
-                 deploytoVM.deploy(SSHCONFIG)
+                 deploytoVM.deploy(SSHCONFIGNAME)
              }
             }
         }
