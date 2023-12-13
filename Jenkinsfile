@@ -46,7 +46,7 @@ pipeline {
                         string(credentialsId: 'nexuspassword', variable: 'Nexus_PASSWORD'),
                         string(credentialsId: 'nexususername', variable: 'Nexus_USERNAME')
                     ]) {
-                        downloadartifact.nexusartifact(nexusartifact(String OUTPUTFILENAME,String Nexus_USERNAME,String Nexus_PASSWORD,String Nexus_URL,String Nexus_REPO_ID,String PACKAGE_NAME,String currentVersion))                    }
+                        downloadartifact.nexusartifact(OUTPUTFILENAME,Nexus_USERNAME,Nexus_PASSWORD,Nexus_URL,Nexus_REPO_ID,PACKAGE_NAME,currentVersion)                  }
         }
         }
         }
@@ -83,7 +83,7 @@ pipeline {
          stage('start nginx') {
             steps {
                 script {
-                     startnginx.start(String OUTPUTFILENAME,String SSHCONFIGNAME) 
+                     startnginx.start(OUTPUTFILENAME,SSHCONFIGNAME) 
                 }
                
                 
