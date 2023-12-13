@@ -49,7 +49,7 @@ pipeline {
         steps {
         script {
             withSonarQubeEnv(credentialsId: 'sonartoken', installationName: 'sonarqube') {
-                sonar.sonarscananalysis('React', 'React')
+                sonar.sonarscananalysis('React-proj', 'React-proj')
             }
         }
      }
