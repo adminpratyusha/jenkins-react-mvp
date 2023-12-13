@@ -87,7 +87,8 @@ pipeline {
                 }
             }
       }
-          stage('DOCKER BUILD & PUSH') {
+        
+        stage('DOCKER BUILD & PUSH') {
       steps {
         script {
              dockertask.pushtodocker(IMAGE_NAME,DOCKER_CREDENTIALS_ID)
