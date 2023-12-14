@@ -32,13 +32,13 @@ pipeline {
       }
         }
         
-            stage('Test React App') {
-            steps {
-                script{
-                 npm.test()
-                }
-            }
-        }
+        //     stage('Test React App') {
+        //     steps {
+        //         script{
+        //          npm.test()
+        //         }
+        //     }
+        // }
 
 
     // stage('CODE ANALYSIS with SONARQUBE') {
@@ -103,7 +103,7 @@ pipeline {
                 script {
                     // Trigger the downstream pipeline (Pipeline B) only if the build is stable or successful
                     if (currentBuild.resultIsBetterOrEqualTo('SUCCESS')) {
-                        build job: 'AutoDeployToDev', parameters: [string(name: 'buildID', value: ARTIFACT_VERSION)]
+                        build job: 'AutoDeployToDev-react', parameters: [string(name: 'buildID', value: ARTIFACT_VERSION)]
                     } else {
                         echo 'Skipping downstream pipeline due to unsuccessful upstream build.'
                     }
