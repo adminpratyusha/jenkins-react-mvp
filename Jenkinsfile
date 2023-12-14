@@ -7,11 +7,7 @@ pipeline {
         SSHCONFIGNAME='sshtest'
     }
 
-    parameters {
-        string(name: 'currentVersion', defaultValue: '0.1.0.19', description: 'Enter the version number')
-        // choice(name: 'ENVIRONMENT', choices: ['QA', 'Pre-Prod', 'Prod'], description: 'Select deployment environment')
-    }
-
+   
     stages {
         // stage('set environment'){    
         //       steps {
@@ -43,11 +39,11 @@ pipeline {
                     
                     withCredentials([
                        string(credentialsId: 'downloadurl', variable: 'Nexus_URL'),
-                        string(credentialsId: 'downloadrepo', variable: 'Nexus_REPO_ID'),
+                        string(credentialsId: 'developreactrepo', variable: 'Nexus_REPO_ID'),
                         string(credentialsId: 'nexuspassword', variable: 'Nexus_PASSWORD'),
                         string(credentialsId: 'nexususername', variable: 'Nexus_USERNAME')
                     ]) {
-                        downloadartifact.nexusartifact(OUTPUTFILENAME,Nexus_USERNAME,Nexus_PASSWORD,Nexus_URL,Nexus_REPO_ID,PACKAGE_NAME,currentVersion)                  }
+                        downloadartifact.nexusartifact(OUTPUTFILENAME,Nexus_USERNAME,Nexus_PASSWORD,Nexus_URL,Nexus_REPO_ID,PACKAGE_NAME,params.buildID)                  }
         }
         }
         }
