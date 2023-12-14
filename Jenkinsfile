@@ -82,7 +82,7 @@ pipeline {
                         string(credentialsId: 'nexususername', variable: 'NEXUS_USERNAME')
                     ]) {
 
-                     nexusrepo.pushtonexus(NEXUS_USERNAME,NEXUS_PASSWORD,NEXUS_URL,NEXUS_REPO_ID,env.PACKAGE_NAME)
+                     ARTIFACT_VERSION=nexusrepo.pushtonexus(NEXUS_USERNAME,NEXUS_PASSWORD,NEXUS_URL,NEXUS_REPO_ID,env.PACKAGE_NAME)
                     }
                 }
             }
@@ -98,6 +98,18 @@ pipeline {
 
         }
       }
+         stage('Trigger Downstream Pipeline') {
+            steps {
+                script {
+                    // Trigger the downstream pipeline (Pipeline B) only if the build is stable or successful
+                    if (currentBuild.resultIsBetterOrEqualTo('SUCCESS')) {
+                        build job: 'AutoDeployToDev', parameters: [string(name: 'buildID', value: ARTIFACT_VERSION)]
+                    } else {
+                        echo 'Skipping downstream pipeline due to unsuccessful upstream build.'
+                    }
+                }
+            }
+        }
     }
 
 
