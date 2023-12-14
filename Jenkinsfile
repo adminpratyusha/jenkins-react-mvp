@@ -2,7 +2,7 @@
 pipeline {
     agent any
     environment {
-       PACKAGE_NAME = 'mvprelease-react'
+       PACKAGE_NAME = 'mvp-react'
         OUTPUTFILENAME="build.tar.gz"
         SSHCONFIGNAME='sshtest'
     }
@@ -43,6 +43,7 @@ pipeline {
                         string(credentialsId: 'nexuspassword', variable: 'Nexus_PASSWORD'),
                         string(credentialsId: 'nexususername', variable: 'Nexus_USERNAME')
                     ]) {
+                        echo "the value is ${params.buildID}"
                         downloadartifact.nexusartifact(OUTPUTFILENAME,Nexus_USERNAME,Nexus_PASSWORD,Nexus_URL,Nexus_REPO_ID,PACKAGE_NAME,params.buildID)                  }
         }
         }
