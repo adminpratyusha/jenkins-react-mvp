@@ -41,28 +41,28 @@ pipeline {
         }
 
 
-    stage('CODE ANALYSIS with SONARQUBE') {
-      environment {
-        scannerHome = tool 'sonar-scanner'
-      }
+    // stage('CODE ANALYSIS with SONARQUBE') {
+    //   environment {
+    //     scannerHome = tool 'sonar-scanner'
+    //   }
 
-        steps {
-        script {
-            withSonarQubeEnv(credentialsId: 'sonartoken', installationName: 'sonarqube') {
-                sonar.sonarscananalysis('React-proj', 'React-proj')
-            }
-        }
-     }
+    //     steps {
+    //     script {
+    //         withSonarQubeEnv(credentialsId: 'sonartoken', installationName: 'sonarqube') {
+    //             sonar.sonarscananalysis('React-proj', 'React-proj')
+    //         }
+    //     }
+    //  }
 
-    }
+    // }
 
-         stage('OWASP Dependency-Check Vulnerabilities') {
-      steps {
-        script {
-               dependency.owasp()
-      }
-      }
-    }
+    //      stage('OWASP Dependency-Check Vulnerabilities') {
+    //   steps {
+    //     script {
+    //            dependency.owasp()
+    //   }
+    //   }
+    // }
 
            stage('Archive Artifact') {
       steps {
