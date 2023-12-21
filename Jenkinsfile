@@ -9,22 +9,7 @@ pipeline {
 
    
     stages {
-        // stage('set environment'){    
-        //       steps {
-        //         script {
-        //              if (params.ENVIRONMENT == "QA") {
-        //                 SSHCONFIGNAME = 'QACRED'
-        //             } else if (params.ENVIRONMENT == "Pre-Prod") {
-        //                 SSHCONFIGNAME = 'PREPRODCRED'
-        //             } else {
-        //                 SSHCONFIGNAME = 'PRODCRED'
-        //             }
-        //             echo "SSH Configuration Name: ${SSHCONFIGNAME}"
-
-
-        // }
-        //       }
-        // }
+      
         stage('clean artifact ws') {
             steps {
                 script {
