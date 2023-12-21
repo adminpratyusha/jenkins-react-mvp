@@ -7,7 +7,7 @@ pipeline {
         IMAGE_NAME = 'pratyusha2001/mvpreact-release'
     }
 
-    stages {
+stages {
  stage('Install Dependencies') {
             steps {
                 script{
