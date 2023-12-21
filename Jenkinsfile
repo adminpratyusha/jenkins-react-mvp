@@ -29,8 +29,7 @@ pipeline {
         }
       }
         }
-        
-            stage('Test React App') {
+        stage('Test React App') {
             steps {
                 script{
                  npm.test()
