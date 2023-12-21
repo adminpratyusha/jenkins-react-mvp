@@ -4,7 +4,7 @@ pipeline {
     environment {
        PACKAGE_NAME = 'mvprelease-react'
         OUTPUTFILENAME="build.tar.gz"
-        // SSHCONFIGNAME='sshtest'
+        SSHCONFIGNAME='sshtest'
     }
 
     parameters {
