@@ -15,7 +15,6 @@ pipeline {
                 }
             }
         }
-
         stage('Build React App') {
             steps {
                 script{
