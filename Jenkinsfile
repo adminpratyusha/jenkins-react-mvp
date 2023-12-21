@@ -4,31 +4,31 @@ pipeline {
     environment {
        PACKAGE_NAME = 'mvprelease-react'
         OUTPUTFILENAME="build.tar.gz"
-        SSHCONFIGNAME='sshtest'
+        // SSHCONFIGNAME='sshtest'
     }
 
     parameters {
         string(name: 'currentVersion', defaultValue: '0.1.0.19', description: 'Enter the version number')
-        // choice(name: 'ENVIRONMENT', choices: ['QA', 'Pre-Prod', 'Prod'], description: 'Select deployment environment')
+        choice(name: 'ENVIRONMENT', choices: ['QA', 'Pre-Prod', 'Prod'], description: 'Select deployment environment')
     }
 
     stages {
-        // stage('set environment'){    
-        //       steps {
-        //         script {
-        //              if (params.ENVIRONMENT == "QA") {
-        //                 SSHCONFIGNAME = 'QACRED'
-        //             } else if (params.ENVIRONMENT == "Pre-Prod") {
-        //                 SSHCONFIGNAME = 'PREPRODCRED'
-        //             } else {
-        //                 SSHCONFIGNAME = 'PRODCRED'
-        //             }
-        //             echo "SSH Configuration Name: ${SSHCONFIGNAME}"
+        stage('set environment'){    
+              steps {
+                script {
+                     if (params.ENVIRONMENT == "QA") {
+                        SSHCONFIGNAME = 'QACRED'
+                    } else if (params.ENVIRONMENT == "Pre-Prod") {
+                        SSHCONFIGNAME = 'PREPRODCRED'
+                    } else {
+                        SSHCONFIGNAME = 'PRODCRED'
+                    }
+                    echo "SSH Configuration Name: ${SSHCONFIGNAME}"
 
 
-        // }
-        //       }
-        // }
+        }
+              }
+        }
         stage('clean artifact ws') {
             steps {
                 script {
