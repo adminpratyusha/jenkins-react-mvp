@@ -5,6 +5,8 @@ pipeline {
         // Define any environment variables you need
        PACKAGE_NAME = 'mvprelease-react'
         IMAGE_NAME = 'pratyusha2001/mvpreact-release'
+         DOCKER_CREDENTIALS_ID = 'dockercred'
+
     }
 
 stages {
