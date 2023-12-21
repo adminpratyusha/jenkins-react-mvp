@@ -93,8 +93,6 @@ pipeline {
         script {
                         dockertask.pushtodocker(IMAGE_NAME,DOCKER_CREDENTIALS_ID)
 
-
-
                     }
 
 
