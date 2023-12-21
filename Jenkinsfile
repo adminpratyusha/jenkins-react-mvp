@@ -7,7 +7,6 @@ pipeline {
         IMAGE_NAME = 'pratyusha2001/mvpreact'
         DOCKER_CREDENTIALS_ID = 'dockercred'
     }
-
     stages {
         stage('Install Dependencies') {
             steps {
