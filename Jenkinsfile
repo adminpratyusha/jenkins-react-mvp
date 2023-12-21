@@ -1,7 +1,6 @@
 @Library('react-shared-library') _
 pipeline {
     agent any
-
     environment {
         // Define any environment variables you need
          PACKAGE_NAME = 'mvp-react'
